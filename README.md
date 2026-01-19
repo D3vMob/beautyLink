@@ -217,4 +217,4 @@ If you find a bug or have a feature request, please open an issue on [GitHub](ht
 
 ## Author
 
-Your Name - [your.email@example.com](mailto:your.email@example.com)
+Andre Desbiens
