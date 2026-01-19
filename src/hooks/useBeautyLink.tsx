@@ -3,6 +3,11 @@ import type { ReactNode } from 'react';
 import { FILE_TYPE_ICONS } from '../utils/fileIcons';
 import { loadNerdFonts } from '../utils/loadNerdFonts';
 
+// Load fonts immediately when module is imported (browser only, one-time)
+if (typeof window !== 'undefined') {
+  loadNerdFonts();
+}
+
 interface LinkMetadata {
   title: string;
   favicon: string | null;
@@ -28,6 +33,7 @@ function getFileExtension(url: string): string | null {
  * with page titles and favicons
  * @param text - The input string containing potential URLs
  * @param target - How to open links: 'new-tab' (default), 'new-window', or 'self'
+ * @param customColor - Custom color for links (optional)
  * @returns An array of React nodes with text and links
  */
 export const useBeautyLink = (text: string, target: LinkTarget = 'new-tab', customColor?: string): ReactNode[] => {
@@ -35,11 +41,6 @@ export const useBeautyLink = (text: string, target: LinkTarget = 'new-tab', cust
   const [linkMetadata, setLinkMetadata] = useState<Record<string, LinkMetadata>>({});
   
   const urls = Array.from(text.matchAll(urlRegex)).map(match => match[0]);
-
-  // Load Nerd Fonts once when hook is first used
-  useEffect(() => {
-    loadNerdFonts();
-  }, []);
 
   useEffect(() => {
     const fetchAllMetadata = async () => {

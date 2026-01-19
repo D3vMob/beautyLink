@@ -12,6 +12,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Persistent caching mechanism for fetched metadata
 - Custom fallback icons
 
+## [1.1.4] - 2026-01-19
+
+### Fixed
+- **Critical**: Fixed font loading timing issue where icons appeared as squares
+  - Moved font loading from `useEffect` to module-level execution
+  - Fonts now load immediately when module is imported, before first render
+  - Ensures icons display correctly on first render in consumer projects
+  
+### Changed
+- Font loading is now synchronous at module import time (SSR-safe)
+- Added `typeof window` check for better SSR/Node.js compatibility
+- Enhanced error handling and debug logging for font loading
+- Exported `loadNerdFonts()` utility for manual triggering if needed
+
+### Technical
+- Bundle size: ESM 9.74 kB (3.22 kB gzipped), CJS 6.81 kB (2.81 kB gzipped)
+- Font loading happens once per application, cached globally
+- Added console.debug message for successful font loading
+
 ## [1.1.3] - 2026-01-19
 
 ### Fixed
