@@ -1,0 +1,42 @@
+# Source files
+src/
+!dist/
+
+# Development files
+*.config.js
+*.config.ts
+tsconfig*.json
+.eslintrc*
+.prettierrc*
+
+# IDE
+.vscode/
+.idea/
+
+# Tests
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Build tools
+vite.config.ts
+eslint.config.js
+
+# Demo/Example
+index.html
+public/
+
+# Git
+.git/
+.gitignore
+
+# Package managers
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Misc
+*.log
+.DS_Store
