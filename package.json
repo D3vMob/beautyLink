@@ -1,6 +1,6 @@
 {
   "name": "react-beauty-link",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A React hook that converts URLs in text to beautiful clickable links with page titles and favicons",
   "type": "module",
   "main": "./dist/index.cjs",
