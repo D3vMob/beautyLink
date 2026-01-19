@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Persistent caching mechanism for fetched metadata
 - Custom fallback icons
 
-## [1.1.4] - 2026-01-19
+## [1.1.5] - 2026-01-19
 
 ### Fixed
 - **Critical**: Fixed font loading timing issue where icons appeared as squares
