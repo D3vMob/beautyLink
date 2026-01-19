@@ -8,10 +8,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Add customizable styling options
 - Support for HTTP URLs (currently HTTPS only)
-- Caching mechanism for fetched metadata
+- Persistent caching mechanism for fetched metadata
 - Custom fallback icons
+
+## [1.1.3] - 2026-01-19
+
+### Fixed
+- **Critical**: File type icons now load correctly when package is used in other projects
+  - Added automatic Nerd Font loading via dynamic style injection
+  - Fonts are loaded once per application lifecycle
+  - No manual setup required by consumers
+
+### Changed
+- Nerd Fonts are now automatically injected into the document head when hook is first used
+- Improved bundle size optimization (ESM: 9.45 kB, CJS: 6.56 kB)
+
+### Technical
+- Added `loadNerdFonts()` utility for dynamic font loading
+- Fonts loaded from jsDelivr CDN with proper fallbacks
+- SSR-safe font loading (checks for `document` existence)
+
+## [1.1.2] - 2026-01-19
+
+### Added
+- **Custom link colors** via third parameter `customColor`
+- Comprehensive README documentation with 60+ examples
+- Detailed API reference with parameter tables
+- Complete file type support matrix with icons and colors
+- Advanced usage examples (theming, context, dynamic content)
+- Troubleshooting guide
+- Browser compatibility matrix
+
+### Changed
+- Enhanced README from 221 to 795 lines
+- Improved documentation structure with emojis and tables
+- Added styling customization guide
+
+## [1.1.1] - 2026-01-19
+
+### Changed
+- Minor documentation improvements
+- Repository URL corrections
+
+## [1.1.0] - 2026-01-18
+
+### Added
+- **File type icon support** with 60+ file extensions
+- Nerd Font icons for documents, code, media, and archives
+- Color-coded icons by file category
+- Automatic file extension detection
+- Fast rendering for file URLs (no metadata fetching)
+
+### Changed
+- Improved performance by skipping metadata fetch for file URLs
+- Enhanced TypeScript types with `verbatimModuleSyntax` support
+
+### Fixed
+- TypeScript import errors with strict module syntax
+- Test suite hanging/freezing issues (changed to run-once mode)
 
 ## [1.0.0] - 2026-01-18
 

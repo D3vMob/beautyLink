@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { FILE_TYPE_ICONS } from '../utils/fileIcons';
+import { loadNerdFonts } from '../utils/loadNerdFonts';
 
 interface LinkMetadata {
   title: string;
@@ -34,6 +35,11 @@ export const useBeautyLink = (text: string, target: LinkTarget = 'new-tab', cust
   const [linkMetadata, setLinkMetadata] = useState<Record<string, LinkMetadata>>({});
   
   const urls = Array.from(text.matchAll(urlRegex)).map(match => match[0]);
+
+  // Load Nerd Fonts once when hook is first used
+  useEffect(() => {
+    loadNerdFonts();
+  }, []);
 
   useEffect(() => {
     const fetchAllMetadata = async () => {
