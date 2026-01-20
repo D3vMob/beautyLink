@@ -12,6 +12,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Persistent caching mechanism for fetched metadata
 - Custom fallback icons
 
+## [1.1.6] - 2026-01-19
+
+### Changed
+- **Improved error handling**: Reduced console noise for metadata fetching
+  - Changed from `console.warn`/`console.error` to `console.debug`
+  - Errors only shown in development mode (`NODE_ENV === 'development'`)
+  - Production builds are now completely silent
+  - Added third CORS proxy (api.codetabs.com) for better reliability
+  
+### Fixed
+- Reduced timeout from 10s to 5s for faster proxy failover
+- Better TypeScript error handling for proxy failures
+- More informative debug messages with cleaner formatting
+
+### Technical
+- Bundle size: ESM 10.13 kB (3.31 kB gzipped), CJS 7.14 kB (2.90 kB gzipped)
+- Proxy errors are expected behavior and handled gracefully
+- Metadata failures automatically fall back to URL + Google favicon
+
 ## [1.1.5] - 2026-01-19
 
 ### Fixed

@@ -62,15 +62,19 @@ export const useBeautyLink = (text: string, target: LinkTarget = 'new-tab', cust
           }
           
           try {
-            console.log('Fetching metadata for:', url);
             const metadata = await fetchLinkMetadata(url);
-            console.log('Metadata received:', metadata);
+            if (process.env.NODE_ENV === 'development') {
+              console.debug('[react-beauty-link] Metadata fetched:', url);
+            }
             setLinkMetadata(prev => ({
               ...prev,
               [url]: metadata
             }));
           } catch (error) {
-            console.error('Failed to fetch metadata for', url, error);
+            // Silently fall back to URL - this is expected behavior
+            if (process.env.NODE_ENV === 'development') {
+              console.debug('[react-beauty-link] Using URL fallback for:', url);
+            }
             setLinkMetadata(prev => ({
               ...prev,
               [url]: {
@@ -211,6 +215,7 @@ async function fetchLinkMetadata(url: string): Promise<LinkMetadata> {
     const proxies = [
       `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
       `https://corsproxy.io/?${encodeURIComponent(url)}`,
+      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
     ];
     
     let html = '';
@@ -219,7 +224,7 @@ async function fetchLinkMetadata(url: string): Promise<LinkMetadata> {
     for (const proxyUrl of proxies) {
       try {
         const response = await fetch(proxyUrl, { 
-          signal: AbortSignal.timeout(10000) // 10 second timeout
+          signal: AbortSignal.timeout(5000) // 5 second timeout (faster failover)
         });
         
         if (!response.ok) continue;
@@ -229,7 +234,11 @@ async function fetchLinkMetadata(url: string): Promise<LinkMetadata> {
         success = true;
         break;
       } catch (err) {
-        console.warn('Proxy failed:', proxyUrl, err);
+        // Only log in development mode to reduce console noise
+        if (process.env.NODE_ENV === 'development') {
+          const errorName = err instanceof Error ? err.name : 'Unknown error';
+          console.debug('[react-beauty-link] Proxy failed:', proxyUrl.split('?')[0], errorName);
+        }
         continue;
       }
     }
@@ -270,7 +279,10 @@ async function fetchLinkMetadata(url: string): Promise<LinkMetadata> {
     
     return { title, favicon };
   } catch (error) {
-    console.error('Error fetching metadata:', error);
+    // Graceful fallback - use hostname and Google favicon service
+    if (process.env.NODE_ENV === 'development') {
+      console.debug('[react-beauty-link] Metadata fetch failed, using fallback');
+    }
     const urlObj = new URL(url);
     return {
       title: urlObj.hostname,
